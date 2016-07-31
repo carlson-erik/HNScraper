@@ -2,9 +2,16 @@ from urllib.request import urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 import sys
+import configparser
 
-def readConfig(config_file):
-    return config_file
+# Reads in the local configuration file
+def readConfig():
+    config = configparser.ConfigParser()
+    config.read("config.cfg")
+    keywords = []
+    for key in config["Keywords"]:
+        keywords.append(config['Keywords'][key])
+    return keywords
 
 # Simple function to pull down the html from the web servers
 def pullHTML(url):
@@ -24,9 +31,7 @@ def getPostPoints(html):
 # Main function to clean up script
 def main():
     url = "http://news.ycombinator.com/news?p=" + str(1) + ".html"
-    current_html = pullHTML(url)
-    #bsObj = BeautifulSoup(current_html, "html.parser")
-    print(current_html)
-    return True
+    keywords = readConfig()
+    print(keywords)
 
 main()
