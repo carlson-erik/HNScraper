@@ -1,3 +1,8 @@
+#!/usr/local/bin/python3
+#   File: HNScraper.py
+#   Created By: Erik Carlson
+#   Last Edited on: Augst 1, 2016
+
 import urllib.request
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
