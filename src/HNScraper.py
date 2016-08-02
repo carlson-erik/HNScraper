@@ -36,21 +36,20 @@ def buildAllPosts(bsoup_html, keywords):
     ret_list = []
     for post in bsoup_html.findAll("a", {"class" : "storylink"}):
         if checkLinkTitle(post.get_text().lower(), keywords) == True:
-            cur_string = post.get_text() + " -- " + str(post['href'])
+            cur_string = post.get_text() + "\t--\t" + str(post['href'])
             ret_list.append(cur_string)
     return ret_list
 
 # Main function to clean up script
 def main():
     keywords = readConfig()
+    readFile = open(keywords[0], "w+")
     for page_num in range(1, 40):
-        print("--------------------------------------- Page " + str(page_num) + " ---------------------------------------")
         url = "https://news.ycombinator.com/news?p=" + str(page_num)
         current_html = pullHTML(url)
         bsoup_html = BeautifulSoup(current_html, "html.parser")
         all_posts = buildAllPosts(bsoup_html, keywords)
         for post in all_posts:
-            print(post)
-        print("--------------------------------------- Page " + str(page_num) + " ---------------------------------------")
+            readFile.write(post + "\n")
 
 main()
